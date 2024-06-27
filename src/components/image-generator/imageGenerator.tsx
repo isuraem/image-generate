@@ -128,7 +128,9 @@ const ImageGenerator: React.FC = () => {
         let downloadUrl: any = resultUrl;
 
         try {
-            const response = await fetch(downloadUrl);
+            const response = await fetch(downloadUrl, {
+                mode: 'cors', 
+            });
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
