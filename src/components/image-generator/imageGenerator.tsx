@@ -96,7 +96,7 @@ const ImageGenerator: React.FC = () => {
         }
         console.log("text",textPrompt)
         if (uploadedImageUrl) {
-            formData.append('image', image);
+            formData.append('image', imgSrc);
             formData.append('prompt', textPrompt);
             formData.append('image_prompt', uploadedImageUrl);
 
