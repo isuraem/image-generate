@@ -3,7 +3,6 @@ import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FaPlus, FaSpinner, FaEye } from 'react-icons/fa';
 import { AiOutlineDownload } from 'react-icons/ai';
-import { saveAs } from 'file-saver';
 import { generateImageWithStyle } from '@/services/imageGenerateService/imageGenerateService';
 import { uploadImage } from '@/services/imageUploadService/imageUploadService';
 import { toast } from 'react-toastify';
@@ -125,7 +124,7 @@ const ImageGenerator: React.FC = () => {
     };
 
     const handleDownload = async () => {
-        let downloadUrl: any = resultUrl;
+        let downloadUrl = resultUrl;
 
         try {
             const response = await fetch(downloadUrl, {
@@ -135,11 +134,19 @@ const ImageGenerator: React.FC = () => {
                 throw new Error('Network response was not ok');
             }
             const blob = await response.blob();
-            saveAs(blob, `generated-image-${generateRandomString(6)}.jpg`);
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = `generated-image-${generateRandomString(6)}.jpg`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
         } catch (error) {
             console.error('Error fetching the image:', error);
         }
     };
+
 
     const handleView = () => {
         if (resultUrl) {
