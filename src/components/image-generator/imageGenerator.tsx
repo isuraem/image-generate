@@ -124,10 +124,10 @@ const ImageGenerator: React.FC = () => {
     };
 
     const handleDownload = async () => {
-        let downloadUrl = resultUrl;
+        let downloadNewUrl :any = resultUrl;
 
         try {
-            const response = await fetch(downloadUrl, {
+            const response = await fetch(downloadNewUrl, {
                 mode: 'cors', 
             });
             if (!response.ok) {
